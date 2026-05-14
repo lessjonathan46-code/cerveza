@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia de Mercado: Cerveza Siembra</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --siembra-green: #2e7d32;
+            --declive-red: #c62828;
+            --bg: #f4f7f6;
+            --dark: #1a1a1a;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--dark); }
+        .dashboard { max-width: 1200px; margin: auto; }
+        
+        header { 
+            background: var(--siembra-green); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .grid-main { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+        /* Estilos de Tabla FAD (FODA Adaptado) */
+        .foda-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .foda-table th { background: #eee; padding: 10px; text-align: left; }
+        .foda-table td { padding: 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+
+        /* Indicadores de Tendencia */
+        .trend-box { display: flex; justify-content: space-between; margin-bottom: 20px; gap: 10px; }
+        .trend-item { 
+            flex: 1; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 10px; 
+            text-align: center; 
+            border-top: 4px solid var(--siembra-green);
+        }
+        .val-down { color: var(--declive-red); font-weight: bold; }
+        .val-up { color: var(--siembra-green); font-weight: bold; }
+
+        @media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <h1>Análisis de Mercado: Pivot Estratégico Siembra</h1>
+        <p>Impacto de la Mejora de Sabor en el Posicionamiento y Recompra</p>
+    </header>
+
+    <!-- KPIs Rápidos -->
+    <div class="trend-box">
+        <div class="trend-item">
+            <span style="display:block; font-size: 0.8rem;">PERCEPCIÓN SABOR</span>
+            <span class="val-down">Declive: 4.2/10</span> → <span class="val-up">Meta: 8.5/10</span>
+        </div>
+        <div class="trend-item">
+            <span style="display:block; font-size: 0.8rem;">INTENCIÓN RECOMPRA</span>
+            <span class="val-down">Actual: 12%</span> → <span class="val-up">Proy: 48%</span>
+        </div>
+        <div class="trend-item">
+            <span style="display:block; font-size: 0.8rem;">SOSTENIBILIDAD</span>
+            <span class="val-up">Constante: 9.8/10</span>
+        </div>
+    </div>
+
+    <div class="grid-main">
+        <!-- Visualización de Proyección -->
+        <div class="card">
+            <h2>📉 Proyección de Impacto: Ventas y Aceptación</h2>
+            <canvas id="marketChart" height="140"></canvas>
+            <div style="margin-top: 20px;">
+                <h3>Análisis de Clientes y Canales</h3>
+                <p style="font-size: 0.9rem; line-height: 1.5;">
+                    <strong>Comportamiento:</strong> Durante el declive, el cliente joven (18-25) abandonó la marca hacia la competencia premium por falta de "suavidad". 
+                    <strong>Oportunidad:</strong> Con la nueva fórmula, se proyecta recuperar la presencia en <strong>Bares y Apps</strong>, donde la sensibilidad al sabor es crítica.
+                </p>
+            </div>
+        </div>
+
+        <!-- Análisis FODA y Segmentación -->
+        <div class="card">
+            <h2>📋 Matriz de Diagnóstico</h2>
+            <table class="foda-table">
+                <tr>
+                    <th>Punto</th>
+                    <th>Estado en Declive</th>
+                    <th>Post-Mejora</th>
+                </tr>
+                <tr>
+                    <td><strong>Competencia</strong></td>
+                    <td>Vulnerable ante precios bajos.</td>
+                    <td>Diferenciación por calidad.</td>
+                </tr>
+                <tr>
+                    <td><strong>Posicionamiento</strong></td>
+                    <td>"Cerveza social pero amarga".</td>
+                    <td>"Sostenibilidad premium".</td>
+                </tr>
+                <tr>
+                    <td><strong>Demanda</strong></td>
+                    <td>Estancada / Solo rural.</td>
+                    <td>Urbana / Joven / Premium.</td>
+                </tr>
+                <tr>
+                    <td><strong>Distribución</strong></td>
+                    <td>Baja rotación en percha.</td>
+                    <td>Alta demanda en horeca.</td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 25px; padding: 15px; background: #e8f5e9; border-radius: 8px;">
+                <h4 style="margin:0; color: var(--siembra-green);">Tendencia Global</h4>
+                <p style="font-size: 0.8rem; margin: 5px 0 0;">
+                    El mercado ecuatoriano se alinea a la tendencia <strong>"Eco-Hedonismo"</strong>: el consumidor quiere salvar el mundo (sostenibilidad) pero solo si el producto sabe excelente.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('marketChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr (Fórmula Nueva)', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Volumen de Ventas (Hectolitros)',
+                data: [1100, 950, 800, 1050, 1300, 1600, 1850],
+                borderColor: '#2e7d32',
+                borderWidth: 3,
+                fill: true,
+                backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                tension: 0.4,
+                pointRadius: 5
+            },
+            {
+                label: 'Aceptación del Consumidor (%)',
+                data: [40, 35, 30, 65, 78, 85, 90],
+                borderColor: '#ffa000',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                fill: false,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
